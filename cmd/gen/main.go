@@ -11,8 +11,8 @@ import (
 func main() {
 	var in, out string
 	var seed int
-	flag.StringVar(&in, "in", "", "Path to input file")
-	flag.StringVar(&out, "out", "", "Outfile file")
+	flag.StringVar(&in, "in", "./imgs/1.jpg", "Path to input file")
+	flag.StringVar(&out, "out", "out.jpg", "Outfile file")
 	flag.IntVar(&seed, "seed", 0, "The seed to use for image generation")
 	flag.Parse()
 
@@ -23,8 +23,8 @@ func main() {
 		}
 	})
 
-	generator := synthesis.New(in, out)
-	if err := generator.Load(); err != nil {
+	generator := synthesis.New()
+	if err := generator.Load(in); err != nil {
 		log.Fatalf("Failed to load example file from disk: %v", err)
 	}
 
@@ -32,7 +32,7 @@ func main() {
 		log.Fatalf("Failed to generate image with error: %v", err)
 	}
 
-	if err := generator.Save(); err != nil {
+	if err := generator.Save(out); err != nil {
 		log.Fatalf("Failed to save generated image to disk: %v", err)
 	}
 }
